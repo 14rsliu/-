@@ -1,0 +1,66 @@
+<!--pages/ai-fit/ai-fit.wxml-->
+<view class="container">
+  <view class="progress-bar">
+    <view class="progress" style="width: {{progress}}%"></view>
+  </view>
+  
+  <view class="question-count">
+    第 {{currentQuestion + 1}} / {{questions.length}} 题
+  </view>
+
+  <view class="question-card" wx:if="{{questions.length > 0}}">
+    <view class="question-text">{{questions[currentQuestion].question}}</view>
+    
+    <view class="options">
+      <view 
+        class="option {{selected === index ? 'selected' : ''}}" 
+        wx:for="{{questions[currentQuestion].options}}" 
+        wx:key="index"
+        bindtap="selectOption"
+        data-index="{{index}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <view class="buttons">
+    <button class="btn-submit" bindtap="submitAnswer" disabled="{{selected === null}}">
+      {{currentQuestion === questions.length - 1 ? '完成测试' : '下一题'}}
+    </button>
+  </view>
+
+  <view class="result-card" wx:if="{{showResult}}">
+    <view class="result-title">🤖 AI 时代适配度</view>
+    <view class="result-score">
+      <view class="score-circle">
+        <view class="score-number">{{fitScore}}</view>
+        <view class="score-label">适配指数</view>
+      </view>
+    </view>
+    <view class="result-level {{levelClass}}">{{levelName}}</view>
+    <view class="result-desc">{{resultDesc}}</view>
+    
+    <view class="ai-suggestions">
+      <view class="section-title">📌 AI 时代建议</view>
+      <view class="suggestion-list">
+        <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="index">
+          <view class="suggestion-icon">{{item.icon}}</view>
+          <view class="suggestion-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="career-suggestions">
+      <view class="section-title">🎯 推荐发展方向</view>
+      <view class="career-list">
+        <view class="career-item" wx:for="{{recommendedCareers}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <button class="btn-home" bindtap="goHome">返回首页</button>
+    <button class="btn-next" bindtap="nextTest">继续 AI 取代风险测试</button>
+  </view>
+</view>

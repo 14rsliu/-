@@ -1,0 +1,242 @@
+/* pages/ai-fit/ai-fit.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12rpx;
+  background: rgba(255,255,255,0.3);
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.progress {
+  height: 100%;
+  background: white;
+  transition: width 0.3s;
+  border-radius: 6rpx;
+}
+
+.question-count {
+  text-align: center;
+  color: white;
+  font-size: 24rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.9;
+}
+
+.question-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+}
+
+.question-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40rpx;
+  line-height: 1.6;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.option {
+  padding: 24rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: #333;
+  transition: all 0.2s;
+  border: 3rpx solid transparent;
+  text-align: center;
+}
+
+.option:active {
+  transform: scale(0.98);
+}
+
+.option.selected {
+  background: #667eea;
+  color: white;
+  border-color: #5a6fd6;
+}
+
+.buttons {
+  margin-top: 30rpx;
+}
+
+.btn-submit {
+  width: 100%;
+  background: white;
+  color: #667eea;
+  font-size: 32rpx;
+  font-weight: 600;
+  padding: 28rpx;
+  border-radius: 16rpx;
+  border: none;
+}
+
+.btn-submit[disabled] {
+  background: rgba(255,255,255,0.5);
+  color: rgba(102,126,234,0.5);
+}
+
+.result-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+}
+
+.result-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.result-score {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30rpx;
+}
+
+.score-circle {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8rpx 32rpx rgba(102,126,234,0.4);
+}
+
+.score-number {
+  font-size: 64rpx;
+  font-weight: bold;
+}
+
+.score-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.result-level {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 16rpx;
+}
+
+.result-level.excellent {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+}
+
+.result-level.good {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+.result-level.medium {
+  background: linear-gradient(135deg, #fa709a, #fee140);
+  color: white;
+}
+
+.result-level.low {
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #333;
+}
+
+.result-desc {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.suggestion-list {
+  margin-bottom: 30rpx;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.suggestion-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.suggestion-text {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.career-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.career-item {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.btn-home, .btn-next {
+  width: 100%;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 28rpx;
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+  border: none;
+}
+
+.btn-home {
+  background: #f8f9fa;
+  color: #666;
+}
+
+.btn-next {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}

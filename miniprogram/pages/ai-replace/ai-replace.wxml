@@ -1,0 +1,73 @@
+<!--pages/ai-replace/ai-replace.wxml-->
+<view class="container">
+  <view class="progress-bar">
+    <view class="progress" style="width: {{progress}}%"></view>
+  </view>
+  
+  <view class="question-count">
+    第 {{currentQuestion + 1}} / {{questions.length}} 题
+  </view>
+
+  <view class="question-card" wx:if="{{questions.length > 0}}">
+    <view class="question-text">{{questions[currentQuestion].question}}</view>
+    
+    <view class="options">
+      <view 
+        class="option {{selected === index ? 'selected' : ''}}" 
+        wx:for="{{questions[currentQuestion].options}}" 
+        wx:key="index"
+        bindtap="selectOption"
+        data-index="{{index}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <view class="buttons">
+    <button class="btn-submit" bindtap="submitAnswer" disabled="{{selected === null}}">
+      {{currentQuestion === questions.length - 1 ? '完成测试' : '下一题'}}
+    </button>
+  </view>
+
+  <view class="result-card" wx:if="{{showResult}}">
+    <view class="result-title">⚠️ AI 取代风险评估</view>
+    
+    <view class="risk-gauge">
+      <view class="gauge-bg">
+        <view class="gauge-pointer" style="transform: rotate({{gaugeRotation}}deg);"></view>
+      </view>
+      <view class="gauge-labels">
+        <view class="gauge-label left">低风险</view>
+        <view class="gauge-label right">高风险</view>
+      </view>
+    </view>
+
+    <view class="result-risk {{riskClass}}">{{riskName}}</view>
+    <view class="result-percent">风险指数：{{riskPercent}}%</view>
+    <view class="result-desc">{{resultDesc}}</view>
+    
+    <view class="risk-factors">
+      <view class="section-title">📊 风险因素分析</view>
+      <view class="factor-list">
+        <view class="factor-item {{item.class}}" wx:for="{{riskFactors}}" wx:key="name">
+          <view class="factor-name">{{item.name}}</view>
+          <view class="factor-value">{{item.value}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="protection-suggestions">
+      <view class="section-title">🛡️ 提升不可替代性</view>
+      <view class="suggestion-list">
+        <view class="suggestion-item" wx:for="{{protections}}" wx:key="index">
+          <view class="suggestion-icon">{{item.icon}}</view>
+          <view class="suggestion-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <button class="btn-home" bindtap="goHome">返回首页</button>
+    <button class="btn-next" bindtap="nextTest">继续 AI 应用调查</button>
+  </view>
+</view>

@@ -1,0 +1,136 @@
+<!--pages/result/result.wxml-->
+<view class="container">
+  <view class="header-card">
+    <view class="header-icon">🎯</view>
+    <view class="header-title">你的完整测评报告</view>
+    <view class="header-subtitle">探索自我，规划未来</view>
+  </view>
+
+  <view class="content-card">
+    <!-- 完成进度 -->
+    <view class="progress-section">
+      <view class="progress-header">
+        <view class="progress-title">测试完成度</view>
+        <view class="progress-percent">{{completedCount}}/5</view>
+      </view>
+      <view class="progress-bar-large">
+        <view class="progress-fill-large" style="width: {{progressPercent}}%"></view>
+      </view>
+      <view class="progress-tip" wx:if="{{completedCount < 5}}">
+        💡 完成所有测试，获取完整职业规划建议
+      </view>
+    </view>
+
+    <!-- 测试结果概览 -->
+    <view class="results-overview">
+      <!-- 性格测试 -->
+      <view class="result-item {{results.personality ? 'completed' : ''}}" bindtap="viewDetail" data-type="personality">
+        <view class="result-icon">🎭</view>
+        <view class="result-info">
+          <view class="result-name">性格测试</view>
+          <view class="result-value" wx:if="{{results.personality}}">{{results.personality.type}} · {{results.personality.name}}</view>
+          <view class="result-placeholder" wx:else>未完成</view>
+        </view>
+        <view class="result-arrow">{{results.personality ? '✅' : '→'}}</view>
+      </view>
+
+      <!-- 职业偏好 -->
+      <view class="result-item {{results.careerPrefer ? 'completed' : ''}}" bindtap="viewDetail" data-type="careerPrefer">
+        <view class="result-icon">💼</view>
+        <view class="result-info">
+          <view class="result-name">职业偏好</view>
+          <view class="result-value" wx:if="{{results.careerPrefer}}">{{results.careerPrefer.code}} · 霍兰德代码</view>
+          <view class="result-placeholder" wx:else>未完成</view>
+        </view>
+        <view class="result-arrow">{{results.careerPrefer ? '✅' : '→'}}</view>
+      </view>
+
+      <!-- AI 适配度 -->
+      <view class="result-item {{results.aiFit ? 'completed' : ''}}" bindtap="viewDetail" data-type="aiFit">
+        <view class="result-icon">🤖</view>
+        <view class="result-info">
+          <view class="result-name">AI 适配度</view>
+          <view class="result-value" wx:if="{{results.aiFit}}">{{results.aiFit.level}}</view>
+          <view class="result-placeholder" wx:else>未完成</view>
+        </view>
+        <view class="result-arrow">{{results.aiFit ? '✅' : '→'}}</view>
+      </view>
+
+      <!-- AI 取代风险 -->
+      <view class="result-item {{results.aiReplace ? 'completed' : ''}}" bindtap="viewDetail" data-type="aiReplace">
+        <view class="result-icon">⚠️</view>
+        <view class="result-info">
+          <view class="result-name">AI 取代风险</view>
+          <view class="result-value" wx:if="{{results.aiReplace}}">{{results.aiReplace.level}}</view>
+          <view class="result-placeholder" wx:else>未完成</view>
+        </view>
+        <view class="result-arrow">{{results.aiReplace ? '✅' : '→'}}</view>
+      </view>
+
+      <!-- AI 应用调查 -->
+      <view class="result-item {{results.aiUsage ? 'completed' : ''}}" bindtap="viewDetail" data-type="aiUsage">
+        <view class="result-icon">📊</view>
+        <view class="result-info">
+          <view class="result-name">AI 应用调查</view>
+          <view class="result-value" wx:if="{{results.aiUsage}}">已提交</view>
+          <view class="result-placeholder" wx:else>未完成</view>
+        </view>
+        <view class="result-arrow">{{results.aiUsage ? '✅' : '→'}}</view>
+      </view>
+    </view>
+
+    <!-- 综合建议 (完成 3 个以上测试后显示) -->
+    <view class="suggestions-section" wx:if="{{completedCount >= 3}}">
+      <view class="section-title">💡 综合发展建议</view>
+      <view class="suggestion-list">
+        <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="index">
+          <view class="suggestion-icon">{{item.icon}}</view>
+          <view class="suggestion-content">
+            <view class="suggestion-title">{{item.title}}</view>
+            <view class="suggestion-desc">{{item.desc}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 推荐职业 -->
+    <view class="careers-section" wx:if="{{recommendedCareers.length > 0}}">
+      <view class="section-title">🎯 推荐职业方向</view>
+      <view class="career-tags">
+        <view class="career-tag" wx:for="{{recommendedCareers}}" wx:key="*this">{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="btn-retest" bindtap="reTest">重新测试</button>
+      <button class="btn-share" bindtap="shareResult">分享结果</button>
+    </view>
+  </view>
+
+  <!-- 结果详情弹窗 -->
+  <view class="modal" wx:if="{{showModal}}">
+    <view class="modal-mask" bindtap="closeModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <view class="modal-title">{{modalData.title}}</view>
+        <view class="modal-close" bindtap="closeModal">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="modal-detail" wx:if="{{modalData.detail}}">
+          <view class="detail-type">{{modalData.detail}}</view>
+        </view>
+        <view class="modal-desc" wx:if="{{modalData.desc}}">{{modalData.desc}}</view>
+        <view class="modal-careers" wx:if="{{modalData.careers && modalData.careers.length > 0}}">
+          <view class="careers-title">适合职业</view>
+          <view class="career-list">
+            <view class="career-item" wx:for="{{modalData.careers}}" wx:key="*this">{{item}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn-modal-close" bindtap="closeModal">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

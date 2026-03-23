@@ -1,0 +1,50 @@
+<!--pages/personality/personality.wxml-->
+<view class="container">
+  <view class="progress-bar">
+    <view class="progress" style="width: {{progress}}%"></view>
+  </view>
+  
+  <view class="question-count">
+    第 {{currentQuestion + 1}} / {{questions.length}} 题
+  </view>
+
+  <view class="question-card" wx:if="{{questions.length > 0}}">
+    <view class="question-text">{{questions[currentQuestion].question}}</view>
+    
+    <view class="options">
+      <view 
+        class="option {{selected === index ? 'selected' : ''}}" 
+        wx:for="{{questions[currentQuestion].options}}" 
+        wx:key="index"
+        bindtap="selectOption"
+        data-index="{{index}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <view class="buttons">
+    <button class="btn-submit" bindtap="submitAnswer" disabled="{{selected === null}}">
+      {{currentQuestion === questions.length - 1 ? '完成测试' : '下一题'}}
+    </button>
+  </view>
+
+  <view class="result-card" wx:if="{{showResult}}">
+    <view class="result-title">🎭 你的性格类型</view>
+    <view class="result-type">{{resultType}}</view>
+    <view class="result-desc">{{resultDesc}}</view>
+    
+    <view class="career-suggestions">
+      <view class="section-title">适合的职业方向</view>
+      <view class="career-list">
+        <view class="career-item" wx:for="{{careers}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <button class="btn-home" bindtap="goHome">返回首页</button>
+    <button class="btn-next" bindtap="nextTest">继续下一个测试</button>
+  </view>
+</view>

@@ -1,0 +1,114 @@
+<!--pages/ai-usage/ai-usage.wxml-->
+<view class="container">
+  <view class="header-card">
+    <view class="header-icon">📊</view>
+    <view class="header-title">AI 应用调查</view>
+    <view class="header-desc">了解你的 AI 使用情况，帮助我们提供更好的服务</view>
+  </view>
+
+  <view class="form-card" wx:if="{{!submitted}}">
+    <view class="form-section">
+      <view class="section-title">1️⃣ 你目前使用 AI 工具的频率？</view>
+      <view class="options-vertical">
+        <view class="option {{frequency === index ? 'selected' : ''}}" 
+              wx:for="{{frequencyOptions}}" 
+              wx:key="index"
+              bindtap="selectFrequency"
+              data-index="{{index}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">2️⃣ 你主要用 AI 做什么？（多选）</view>
+      <view class="tags-grid">
+        <view class="tag {{usageTags.includes(index) ? 'selected' : ''}}" 
+              wx:for="{{usageOptions}}" 
+              wx:key="index"
+              bindtap="toggleUsage"
+              data-index="{{index}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">3️⃣ 你最常用的 AI 工具是？</view>
+      <view class="tools-list">
+        <view class="tool-item {{tool === index ? 'selected' : ''}}" 
+              wx:for="{{toolOptions}}" 
+              wx:key="index"
+              bindtap="selectTool"
+              data-index="{{index}}">
+          <view class="tool-icon">{{item.icon}}</view>
+          <view class="tool-name">{{item.name}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">4️⃣ AI 对你的工作/学习帮助大吗？</view>
+      <view class="rating">
+        <view class="rating-item {{rating >= index ? 'active' : ''}}" 
+              wx:for="{{5}}" 
+              wx:key="index"
+              bindtap="selectRating"
+              data-index="{{index}}">
+          <view class="rating-icon">{{index < 3 ? '😕' : index < 4 ? '😊' : '🤩'}}</view>
+          <view class="rating-label">{{ratingLabels[index]}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">5️⃣ 你希望 AI 在哪些方面帮助你？</view>
+      <textarea 
+        class="feedback-input" 
+        placeholder="请告诉我们你的需求和建议..." 
+        placeholder-class="placeholder"
+        bindinput="onInput"
+        value="{{feedback}}"
+        maxlength="200"
+      />
+      <view class="char-count">{{feedback.length}}/200</view>
+    </view>
+
+    <view class="submit-section">
+      <button class="btn-submit" bindtap="submitForm" disabled="{{!canSubmit}}">
+        提交问卷
+      </button>
+    </view>
+  </view>
+
+  <view class="success-card" wx:if="{{submitted}}">
+    <view class="success-icon">✅</view>
+    <view class="success-title">感谢你的参与！</view>
+    <view class="success-desc">你的反馈将帮助我们提供更好的服务</view>
+    
+    <view class="usage-summary">
+      <view class="summary-title">📈 你的 AI 使用画像</view>
+      <view class="summary-item">
+        <view class="summary-label">使用频率</view>
+        <view class="summary-value">{{frequencyOptions[frequency]}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">主要用途</view>
+        <view class="summary-tags">
+          <view class="summary-tag" wx:for="{{selectedUsages}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">常用工具</view>
+        <view class="summary-value">{{toolOptions[tool].name}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">帮助程度</view>
+        <view class="summary-value">{{ratingLabels[rating]}}</view>
+      </view>
+    </view>
+
+    <button class="btn-home" bindtap="goHome">返回首页</button>
+    <button class="btn-result" bindtap="viewResult">查看所有测试结果</button>
+  </view>
+</view>
